@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "666353578127",
+    "project_id": "jsecurity-de02f",
+    "storage_bucket": "jsecurity-de02f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666353578127:android:b1f0a5aacd6cd6ba7340fa",
+        "android_client_info": {
+          "package_name": "com.jsecurity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5cwXXw2fCqwKOwk8pFfShgVBtTHE2J5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

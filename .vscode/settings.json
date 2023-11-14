@@ -1,0 +1,22 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    
+        "files.autoSave": "afterDelay",
+        "prettier.jsxSingleQuote": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[jsx-tags]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true,
+        },
+        "[typescriptreact]": {
+          "editor.formatOnSave": true
+        }
+        
+}
