@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -77,4 +79,15 @@ public class MainActivity extends ReactActivity {
       Log.e("SuperLog", "Caught Exception: " + e.getMessage());
       }
     }
+
+//  @Override
+//  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//    super.onActivityResult(requestCode, resultCode, data);
+//    Fragment fragment = (Fragment) getSupportFragmentManager().
+//            findFragmentByTag("screensharing-fragment");
+//    if(fragment!=null){
+//      fragment.onActivityResult(1,resultCode,data);
+//    }
+//  }
 }

@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Box,
   Center,
@@ -13,84 +13,50 @@ import {
   useTheme,
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import GlobalContextProvider from '../../context/GlobalConextProvider';
+import {GlobalContext} from '../../context/GlobalContext';
+import SignInHelper from '../../helper/Auth/GoogleSignIn';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import {features} from './UiData';
+import {scale} from 'react-native-size-matters';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 console.log('width, height', width, height);
 
-const features = [
-  {
-    title: 'Secure Your Device',
-    image: require('../../assets/icons/lock.png'),
-    children: [
-      {
-        image: require('../../assets/icons/shutdown.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-    ],
-  },
-  {
-    title: 'Protect YourSelf',
-    image: require('../../assets/icons/shield.png'),
-    children: [
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-      {
-        image: require('../../assets/icons/shield.png'),
-        title: 'fake Shutdown',
-        subTitle:
-          'Simulate a shutdown on your phone. Track your Location & more while the device is off',
-      },
-    ],
-  },
-];
-
 const HomeScreen = () => {
   const theme = useTheme();
+  const {startForegroundService, logined} = useContext(GlobalContext);
 
+  const logout = async () => {
+    await GoogleSignin.signOut();
+  };
+  useEffect(() => {
+    logout();
+    const subscriber = auth().onAuthStateChanged(user => {
+      // Handle the user state (e.g., save user data based on UID)
+      if (user) {
+        const {uid} = user;
+        // Perform tasks based on UID (save data, fetch data, etc.)
+        console.log('User ID:', uid);
+        // You can use this UID to perform tasks like saving/fetching data associated with the user
+      } else {
+        // User is signed out
+        console.log('User is signed out');
+      }
+    });
+
+    // Unsubscribe on unmount
+    return subscriber;
+  }, []);
   return (
     <ScrollView
       contentContainerStyle={{
         backgroundColor: theme.colors.gray['100'],
       }}>
       <VStack
-        space={4}
+        space={scale(4)}
         alignItems="center"
         divider={<Divider backgroundColor={'white'} h={'px'} />}
         py={'4'}
@@ -120,6 +86,9 @@ const HomeScreen = () => {
           bg="indigo.700"
           rounded="md"
           shadow={3}
+          onPress={() => {
+            SignInHelper(true, startForegroundService);
+          }}
           justifyContent={'center'}
           alignItems={'center'}>
           <Text fontSize={'lg'}>Get Started</Text>
@@ -128,13 +97,22 @@ const HomeScreen = () => {
 
       {features.map((feature, index) => (
         <>
-          <HStack mx={15} shadow={'4'} alignItems={'center'} space={4}>
-            <Image size={30} borderRadius={100} source={feature.image} />
+          <HStack mx={scale(15)} shadow={'4'} alignItems={'center'} space={4}>
+            <Image
+              size={scale(30)}
+              borderRadius={scale(100)}
+              source={feature.image}
+            />
             <Text color={'blue.900'} fontSize={'lg'}>
               {feature.title}
             </Text>
           </HStack>
-          <VStack space={4} py={'4'} borderRadius={10} mx={15} key={index}>
+          <VStack
+            space={scale(4)}
+            py={'4'}
+            borderRadius={10}
+            mx={15}
+            key={index}>
             {feature.children.map((item, index) => (
               <HStack
                 borderWidth={0.5}
